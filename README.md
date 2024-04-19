@@ -29,6 +29,8 @@ MAGX_FSM is a lightweight and versatile Finite State Machine library designed fo
 6. **Handle State Transitions**: Implement state transitions and associated logic within the state handling methods.
 
 ### Example, blinking LED
+![Demo GIF](giffs/blink.gif)
+
 ```cpp
 #include <magx_fsm.h>
 
@@ -79,6 +81,8 @@ void loop() {
 
 }
 ```
+
+
 
 ### Importance
 - **Code Organization**: MAGX_FSM promotes a structured approach to code organization by encapsulating state logic within discrete state objects.
