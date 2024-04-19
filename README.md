@@ -28,34 +28,55 @@ MAGX_FSM is a lightweight and versatile Finite State Machine library designed fo
 
 6. **Handle State Transitions**: Implement state transitions and associated logic within the state handling methods.
 
-### Example
+### Example, blinking LED
 ```cpp
-#include "magx_fsm.h"
+#include <magx_fsm.h>
 
-// Define custom state logic
-void stateA_logic(StateMachine &fsm) {
-    // Custom logic for State A
+//blink LED_BUILTIN by using magx_fsm library
+
+//define state prototypes
+void led_off_state(StateMachine &fsm);
+void led_on_state(StateMachine &fsm);
+
+ 
+//define state transition callback for on_state
+void on_state_callback(StateMachine &fsm){
+  fsm.setStateWithLogic("ON_STATE",led_on_state);
 }
 
-void stateB_logic(StateMachine &fsm) {
-    // Custom logic for State B
+//define state transition callbacks for off_state
+void off_state_callback(StateMachine &fsm){
+  fsm.setStateWithLogic("OFF_STATE",led_off_state);
 }
+
+
+// Define states, in the context of this example, there are two states
+// ON state and OFF state
+void led_off_state(StateMachine &fsm){
+  digitalWrite(LED_BUILTIN,LOW);
+  uint32_t OFF_DURATION =1000;
+  fsm.waitUntilElapsed(OFF_DURATION, on_state_callback, fsm);
+}
+void led_on_state(StateMachine &fsm){
+  digitalWrite(LED_BUILTIN,HIGH);
+  uint32_t ON_DURATION =1000;
+  fsm.waitUntilElapsed(ON_DURATION, off_state_callback, fsm);
+}
+
+
+StateMachine fsm;
 
 void setup() {
-    // Instantiate StateMachine
-    StateMachine fsm;
+  pinMode(LED_BUILTIN,OUTPUT);
 
-    // Set initial state and logic
-    fsm.setStateWithLogic("StateA", stateA_logic);
-
-    // Additional setup code
+  //initialize state manually... this can also be trriggered by event or condition
+  fsm.setStateWithLogic("ON_STATE", led_on_state);
 }
 
 void loop() {
-    // Run StateMachine
-    fsm.run();
+  // put your main code here, to run repeatedly:
+  fsm.run();
 
-    // Additional loop code
 }
 ```
 
