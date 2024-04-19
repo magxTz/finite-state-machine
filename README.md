@@ -36,7 +36,7 @@ MAGX_FSM is a lightweight and versatile Finite State Machine library designed fo
 
 //blink LED_BUILTIN by using magx_fsm library
 
-//define state prototypes
+//define state function prototypes
 void led_off_state(StateMachine &fsm);
 void led_on_state(StateMachine &fsm);
 
@@ -99,12 +99,12 @@ const int YELLOW_DURATION = 600; // 0.6 seconds
 
 
 
-// Function pointers for state logic
+// Function prototypes for state logic
 void redStateLogic(StateMachine &fsm);
 void greenStateLogic(StateMachine &fsm);
 void yellowStateLogic(StateMachine &fsm);
 
-// State transition functions
+// State transition callback functions 
 void greenStateCallback(StateMachine &fsm) {
   fsm.setStateWithLogic("GREEN_STATE", greenStateLogic);
 }
